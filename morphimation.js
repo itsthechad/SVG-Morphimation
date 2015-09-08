@@ -4,6 +4,7 @@
 
 // Variables
 var $mergedSVGs;
+var SVGpath;
 
 
 
@@ -11,7 +12,7 @@ var $mergedSVGs;
 function setupStaticSVG() {
 
 	// grab all the svg data from the merged.html file
-	jQuery.get("caricatureSVGs.html", function(data) {
+	jQuery.get( SVGpath, function(data) {
 
 		$mergedSVGs = data; // save this later for prepAdmins()
 
@@ -119,9 +120,10 @@ function prepAnims() {
 
 
 // Document ready
-function morphimation() {
+function morphimation( mergedSVGsPath ) {
 
-	// Replace default PNG with starting SVG (if no JS, then users just see the PNG)
+	SVGpath = mergedSVGsPath;
+	
 	setupStaticSVG();
 
 } //morphimation
