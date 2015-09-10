@@ -83,6 +83,21 @@ function prepAnims() {
 	// get the g elements with ids from the merged SVGs
 	var $gs = jQuery($mergedSVGs).find('g[id]');
 
+	// go through the gs once to find out the total duration value
+	//var totalDuration = 0;
+	//var useKeyTimes = true;
+	//$gs.each(function(index) {
+		// if the g's id is a number, then we'll add it to the totalDuration
+		//if ( jQuery(this).attr("id").isNumeric ){
+		//	totalDuration += jQuery(this).attr("id");
+		//	console.log(totalDuration);
+		//} 
+		// otherwise, the user did not setup the SVG for keyTimes, so we'll make a note not to use them at all
+		//else {
+		//	useKeyTimes = false;
+		//}
+	//});//each $gs
+	
 	var isLastG = false;
 
 	//loop through each g
