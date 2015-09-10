@@ -15,7 +15,7 @@ function setupStaticSVG() {
 	// grab all the svg data from the merged.html file
 	jQuery.get( SVGpath, function(data) {
 
-		$mergedSVGs = data; // save this later for prepAdmins()
+		$mergedSVGs = data; // save this later for prepAnims()
 
 		// create a static SVG from the first SVG in the file		
 		jQuery('#themorphimation').html( $mergedSVGs );
@@ -24,44 +24,40 @@ function setupStaticSVG() {
 
 		// set a few details and styling for the SVG
 		jQuery('#themorphimation>svg')[0].setAttribute("viewBox", "0, 0, 552, 680");
-		jQuery('#themorphimation>svg').attr({
-			id: "themorphimationSVG",
-			//width: "520px",
-			//height: "680px",
-			style: "float:left; max-width:520px;"
-		});
+		jQuery('#themorphimation>svg').attr("id", "themorphimationSVG");
 		// remove width and height for responsive purposes
 		jQuery('#themorphimation>svg').removeAttr('width height');
 
-		// If we're not in mobile, setup the animations (mobile doesn't get animations, sorry)
+
+		 // add an empty "animate" xml element to every path element
+		jQuery('#themorphimationSVG path').each(function(index) {
+
+			// create the animate element using the SVG namespace and fill it with starting values
+			var animation = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+			animation.setAttributeNS(null, "id", jQuery(this).attr('id') + '-animation');
+			animation.setAttributeNS(null, "dur", animDur + 's');
+			animation.setAttributeNS(null, "repeatCount", "indefinite");
+			animation.setAttributeNS(null, "attributeName", "d");
+			animation.setAttributeNS(null, "values", "");
+			//animation.setAttributeNS(null, "keyTimes", "");
+			animation.setAttributeNS(null, "begin", "0s");
+			// append the animate element to the current path
+			this.appendChild(animation);
+			// tell the animation to begin
+			//animation.beginElement();
+
+		});
+
+		 // prep the animation frames
+		prepAnims();
+
+		// If we're not in mobile, setup the mouse listner (mobile doesn't get this, sorry)
 		if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-
-			// add an empty "animate" xml element to every path element
-			jQuery('#themorphimationSVG path').each(function(index) {
-
-				// create the animate element using the SVG namespace and fill it with starting values
-				var animation = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-				animation.setAttributeNS(null, "id", jQuery(this).attr('id') + '-animation');
-				animation.setAttributeNS(null, "dur", animDur + 's');
-				animation.setAttributeNS(null, "repeatCount", "indefinite");
-				animation.setAttributeNS(null, "attributeName", "d");
-				animation.setAttributeNS(null, "values", "");
-				//animation.setAttributeNS(null, "keyTimes", "");
-				animation.setAttributeNS(null, "begin", "0s");
-				// append the animate element to the current path
-				this.appendChild(animation);
-				// tell the animation to begin
-				//animation.beginElement();
-
-			});
-
-			// prep the animation frames
-			prepAnims();
-
+			
 			// setup mouse listner for interactive fun
 			jQuery('#themorphimationSVG path').mouseenter(mouseEnterPath);
 
-		}
+		} // if mobile check
 
 	});
 
@@ -144,10 +140,10 @@ function prepAnims() {
 
 // Document ready
 function morphimation( mergedSVGsPath, animDuration ) {
-
+	
 	SVGpath = mergedSVGsPath;
 	animDur = animDuration;
-	
+
 	setupStaticSVG();
 
 } //morphimation
