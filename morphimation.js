@@ -5,6 +5,7 @@
 // Variables
 var $mergedSVGs;
 var SVGpath;
+var animDur;
 
 
 
@@ -41,10 +42,11 @@ function setupStaticSVG() {
 				// create the animate element using the SVG namespace and fill it with starting values
 				var animation = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
 				animation.setAttributeNS(null, "id", jQuery(this).attr('id') + '-animation');
-				animation.setAttributeNS(null, "dur", "4s");
+				animation.setAttributeNS(null, "dur", animDur + 's');
 				animation.setAttributeNS(null, "repeatCount", "indefinite");
 				animation.setAttributeNS(null, "attributeName", "d");
 				animation.setAttributeNS(null, "values", "");
+				//animation.setAttributeNS(null, "keyTimes", "");
 				animation.setAttributeNS(null, "begin", "0s");
 				// append the animate element to the current path
 				this.appendChild(animation);
@@ -108,11 +110,17 @@ function prepAnims() {
 				jQuery('#' + pathsID + '-animation').attr('values', function(i, val) {
 					return val + pathsD + '; ';
 				});
+/* 				jQuery('#' + pathsID + '-animation').prop('keyTimes', function(i, val) {
+					return val + '1; ';
+				}); */
 			} else {
 				// slight difference when we're on the last g: no trailing semicolon
 				jQuery('#' + pathsID + '-animation').attr('values', function(i, val) {
 					return val + pathsD;
 				});
+/* 				jQuery('#' + pathsID + '-animation').prop('keyTimes', function(i, val) {
+					return val + '1';
+				}); */
 			}
 		});//each $paths
 	});//each $gs	
@@ -120,9 +128,10 @@ function prepAnims() {
 
 
 // Document ready
-function morphimation( mergedSVGsPath ) {
+function morphimation( mergedSVGsPath, animDuration ) {
 
 	SVGpath = mergedSVGsPath;
+	animDur = animDuration;
 	
 	setupStaticSVG();
 
