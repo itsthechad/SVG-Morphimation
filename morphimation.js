@@ -31,6 +31,8 @@ function setupStaticSVG() {
 		
 		// now put the static SVG in the DOM, in the prescribed container
 		jQuery('#themorphimation').html(staticSVG);
+		// Now fade it all back in
+		jQuery('#themorphimation').removeClass('fadeOut').addClass('fadeIn');
 
 		// Add an empty "animate" xml element to every path element within the SVG. 
 		// We'll be populating these animate elements soon.
@@ -148,6 +150,9 @@ function morphimation( mergedSVGsPath, animDuration ) {
 	SVGpath = mergedSVGsPath;
 	animDur = animDuration;
 
+	// Before putting the static SVG in the DOM, let's first fade out any placeholder graphics that might be there
+	jQuery('#themorphimation').addClass('fadeOut');
+	
 	setupStaticSVG();
 
 } //morphimation

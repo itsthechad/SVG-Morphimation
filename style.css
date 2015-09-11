@@ -5,15 +5,17 @@ h1 {
 #themorphimation {
 	max-width: 520px;
 	margin: 0 auto;
-	animation: fadeIn 4s;
 }
 
-@keyframes fadeIn {
-	0% {
-		opacity: 0;
-	}
+#themorphimation.fadeOut {
+	opacity: 0;
+}
 
-	100% {
-		opacity: 1;
-	}
+#themorphimation.fadeIn {
+	-webkit-transition: 2s;
+  	-moz-transition: 2s;
+  	-ms-transition: 2s;
+  	-o-transition: 2s;
+  	transition: 2s;
+	opacity: 1;
 }

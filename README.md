@@ -31,6 +31,21 @@ Instructions for use:
 	 
 4. Make sure the SVG file is formatted correctly (see below) and renamed with an HTML extension (a silly requirement that I haven't gotten around to fixing).
 
+5. Include the following styles in your CSS if you want the placeholder to not appear and the animation to fade in (recommended, as it's less jarring).5
+
+	#themorphimation.fadeOut {
+		opacity: 0;
+	}
+
+	#themorphimation.fadeIn {
+		-webkit-transition: 2s;
+		-moz-transition: 2s;
+		-ms-transition: 2s;
+		-o-transition: 2s;
+		transition: 2s;
+		opacity: 1;
+	}
+
 
 SVG file:
 
