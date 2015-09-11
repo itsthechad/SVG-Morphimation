@@ -17,19 +17,23 @@ function setupStaticSVG() {
 
 		$mergedSVGs = data; // save this later for prepAnims()
 
-		// create a static SVG from the first SVG in the file		
-		jQuery('#themorphimation').html( $mergedSVGs );
-		jQuery('#themorphimation svg g').not(':nth-child(2)').remove();
+		// create a temporary element in which we'll construct the static SVG		
+		var staticSVG = document.createElement("div");
+		// assign the entire set of mergedSVGs to it
+		jQuery(staticSVG).html(data);
+		// then remove all but the second g element (the one containing the first frame)
+		jQuery(staticSVG).find('g').not(':nth-child(2)').remove();
 		
+		// Now adjust a few attributes
+		jQuery(staticSVG).find('svg')[0].setAttribute("viewBox", "0, 0, 552, 680"); // Yes, size is hard-coded for now. Tsk, tsk.
+		jQuery(staticSVG).find('svg').attr("id", "themorphimationSVG"); // give it the id by which we'll refer to it from now on
+		jQuery(staticSVG).find('svg').removeAttr('width height'); // remove width and height for responsive purposes
+		
+		// now put the static SVG in the DOM, in the prescribed container
+		jQuery('#themorphimation').html(staticSVG);
 
-		// set a few details and styling for the SVG
-		jQuery('#themorphimation>svg')[0].setAttribute("viewBox", "0, 0, 552, 680");
-		jQuery('#themorphimation>svg').attr("id", "themorphimationSVG");
-		// remove width and height for responsive purposes
-		jQuery('#themorphimation>svg').removeAttr('width height');
-
-
-		 // add an empty "animate" xml element to every path element
+		// Add an empty "animate" xml element to every path element within the SVG. 
+		// We'll be populating these animate elements soon.
 		jQuery('#themorphimationSVG path').each(function(index) {
 
 			// create the animate element using the SVG namespace and fill it with starting values
